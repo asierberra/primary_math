@@ -10,6 +10,8 @@ max_trials = 5
 sleep_time = 2
 session_size = 10
 
+max_integer = 30
+
 positive_messages = [
     ':-)',
     'Great!!',
@@ -39,6 +41,7 @@ def seek_input(i1, i2):
 
     return guessed
 
+
 def summary_to_str(summary):
     os.system('cls')
     txt = 'Here is your summary: \n \n'
@@ -54,15 +57,19 @@ def summary_to_str(summary):
                str(s[0] + s[1])) + '\n'
     return txt
 
+
 def enquiry_session():
 
+    base_int = random.randint(1, 10)
+    narrow_down_integers = [i for i in range(max_integer+1) if i%10==base_int]
     summary = []
-    for i, question in enumerate(range(1, session_size+1)):
+    
+    for question in range(1, session_size+1):
         os.system('cls')
         print(f"Question {question} of {session_size}: \n")
 
-        i1 = random.randint(0,11)
-        i2 = random.randint(0,25)
+        i1 = random.randint(0,max_integer)
+        i2 = random.choice(narrow_down_integers)
         guessed = seek_input(i1, i2)
         
         summary.append((i1, i2, guessed))
