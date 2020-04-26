@@ -6,11 +6,12 @@ import time
 from collections import OrderedDict
 
 
-max_trials = 5
+max_trials = 3
 sleep_time = 2
 session_size = 10
 
-max_integer = 30
+max_integer = 50
+max_small_int = 10
 
 positive_messages = [
     ':-)',
@@ -28,8 +29,12 @@ def seek_input(i1, i2):
     trial = 0
     guessed = False
     for  trial in range(1, max_trials+1):
-        answer = input(f"  {i1} + {i2} = ")
-        answer = int(re.sub('[^0-9]','', answer))
+        answer = ''
+        while answer == '':
+            answer = input(f"  {i1} + {i2} = ")
+            answer = re.sub(r'[\+\-\*\/\,\.]','', answer)
+        answer = re.sub('[^0-9]','', answer)
+        answer = int(answer)
     
         if answer == i1 + i2:
             guessed = True
@@ -61,9 +66,9 @@ def summary_to_str(summary):
 def enquiry_session():
 
     base_int = random.randint(1, 10)
-    narrow_down_integers = [i for i in range(max_integer+1) if i%10==base_int]
+    narrow_down_integers = [i for i in range(max_small_int+1) if i%10==base_int]
     summary = []
-    
+
     for question in range(1, session_size+1):
         os.system('cls')
         print(f"Question {question} of {session_size}: \n")
